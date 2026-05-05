@@ -24,4 +24,8 @@ mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log("DB Connected"))
     .catch(err => console.log(err));
 
-app.listen(5000, () => console.log("Server running"));
+if (process.env.NODE_ENV !== "production") {
+    app.listen(5000, () => console.log("Server running"));
+}
+
+module.exports = app;
