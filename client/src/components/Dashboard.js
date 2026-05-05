@@ -9,19 +9,18 @@ const Dashboard = () => {
   const userId = localStorage.getItem('userId');
 
   useEffect(() => {
+    const fetchNotes = async () => {
+      try {
+        const res = await axios.get(`/api/notes/${userId}`);
+        setNotes(res.data);
+        setLoading(false);
+      } catch (err) {
+        console.error(err);
+        setLoading(false);
+      }
+    };
     fetchNotes();
-  }, []);
-
-  const fetchNotes = async () => {
-    try {
-      const res = await axios.get(`/api/notes/${userId}`);
-      setNotes(res.data);
-      setLoading(false);
-    } catch (err) {
-      console.error(err);
-      setLoading(false);
-    }
-  };
+  }, [userId]);
 
   const handleAddNote = async (e) => {
     e.preventDefault();
