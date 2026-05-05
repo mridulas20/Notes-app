@@ -17,11 +17,7 @@ const Auth = () => {
       if (isLogin) {
         const res = await axios.post('/api/auth/login', { email, password });
         localStorage.setItem('token', res.data.token);
-        
-        // Decode token to get userId (simple decode for demo purposes, usually use jwt-decode)
-        const payload = JSON.parse(atob(res.data.token.split('.')[1]));
-        localStorage.setItem('userId', payload.id);
-        
+        localStorage.setItem('userId', res.data.userId);
         navigate('/dashboard');
       } else {
         await axios.post('/api/auth/signup', { email, password });
